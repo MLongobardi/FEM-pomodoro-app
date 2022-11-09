@@ -1,6 +1,6 @@
 //need to write these manually
 //export { default as COMPONENT } from "./COMPONENT.svelte";
 
-export { default as Some } from "./Some.svelte";
-export { default as Test } from "./Test.svelte";
-export { default as Components } from "./Components.svelte";
+export { default as Header } from "./Header.svelte";
+export { default as Main } from "./Main.svelte";
+export { default as Footer } from "./Footer.svelte";

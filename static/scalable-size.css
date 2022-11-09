@@ -1,0 +1,22 @@
+/**
+ * Courtesy of https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+ * Variables are in px, but they must be pure numbers. Define --min-size and --max-size in the object you want to scale, and then use --clampedSize.
+ * --min-size is the size when the screen width is --min-screen, same for --max-size.
+ */
+
+* {
+	--min-screen: 375; /*Change me*/
+	--max-screen: 768; /*Change me*/
+
+	--size-at-min: var(--min-size, 35);
+	--size-at-max: var(--max-size, 50);
+
+	--slope: calc((var(--size-at-max) - var(--size-at-min)) / (var(--max-screen) - var(--min-screen)));
+	--yIntersection: calc(var(--size-at-min) - var(--min-screen) * var(--slope));
+	
+	--clampedSize: clamp(
+		var(--size-at-min) * 1px,
+		var(--yIntersection) * 1px + var(--slope) * 100vw,
+		var(--size-at-max) * 1px
+	);
+}

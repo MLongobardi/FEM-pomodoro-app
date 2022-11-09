@@ -1,15 +1,23 @@
 <script>
-	import { Some, Test, Components } from "$comps";
+	import { Header, Main, Footer } from "$comps";
 </script>
 
-<h1>pomodoro</h1>
-
-<Some />
-<Test />
-<Components />
+<div class="page">
+	<Header />
+	<Main />
+	<Footer />
+</div>
 
 <style>
-	h1 {
-		color: DarkRed;
+	:global(body) {
+		height: 100vh;
+	}
+
+	.page {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		height: 100%;
+		background: #1E213F;
 	}
 </style>
