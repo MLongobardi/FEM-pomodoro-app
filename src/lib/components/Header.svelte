@@ -1,16 +1,14 @@
 <script>
-	let activeButton = 0; //0-1-2
+	import { mainStore } from "$scripts/store.js";
 </script>
 
 <header>
 	<h1>pomodoro</h1>
-
 	<div>
-		<!--<span class="slider" style="left: calc({activeButton} * 33.33%})"/>-->
-		<span class="slider" style:--offset={activeButton}/>
-		{#each ["pomodoro", "short break", "long break"] as text, i}
-			<button class:active={activeButton==i} on:click={()=>{activeButton=i}}>
-				{text}
+		<span class="slider" style:--offset={$mainStore.modeIndex} style:--color={$mainStore.activeColor}/>
+		{#each $mainStore.modes as mode, i}
+			<button class:active={$mainStore.activeMode == mode} on:click={()=>{mainStore.setMode(i)}}>
+				{mode}
 			</button>
 		{/each}
 	</div>
@@ -31,7 +29,7 @@
 	div {
 		--min-size: 313;
 		--max-size: 360;
-		--padding: 7px;
+		--padding: 8px;
 		border-radius: 31.5px;
 		background: #161932;
 		padding: var(--padding);
@@ -43,7 +41,7 @@
 	.slider {
 		--width: calc((100% - 2 * var(--padding)) / 3);
 		position: absolute;
-		background: var(--mainColor);
+		background: var(--color);
 		height: calc(100% - 2 * var(--padding));
 		left: calc(var(--padding) + var(--offset) * var(--width));
 		border-radius: 26.5px;
@@ -60,7 +58,7 @@
 		background: transparent;
 		color: #D7E0FF;
 		border: none;
-		padding: 15px 0;
+		padding: 18px 0;
 		font-weight: 700;
 		opacity: 0.4;
 		transition: opacity 0.3s, color 0.4s;

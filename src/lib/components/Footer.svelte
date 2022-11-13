@@ -1,5 +1,11 @@
+<script>
+	import { mainStore } from "$scripts/store.js";
+</script>
+
 <footer>
-	<img alt="" src="/images/icon-settings.svg"/>
+	<a href on:click={mainStore.toggleSettings}> <!--a11y-->
+		<img alt="" src="/images/icon-settings.svg" />
+	</a>
 </footer>
 
 <style>

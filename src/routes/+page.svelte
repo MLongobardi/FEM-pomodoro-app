@@ -1,20 +1,24 @@
 <script>
-	import { Header, Main, Footer } from "$comps";
-	let fonts = ["KumbhSans", "RobotoSlab", "SpaceMono"];
-	let clockFontWeights = [700,700,400];
-	let colors = ["#F87070","#70F3F8","#D881F8"];
-	let currentFont = 2;
+	import { Header, Main, Footer, Settings } from "$comps";
+	import { mainStore } from "$scripts/store.js"
 </script>
 
-<div class="page" style:--font={fonts[currentFont]} style:--mainColor={colors[currentFont]} style:--clockWeight={clockFontWeights[currentFont]}>
+<div class="page" style:font-family={$mainStore.activeFont}>
 	<Header />
 	<Main />
-	<div class="temp" style="margin-bottom: 20px;">
-		{#each fonts as font, i}
-			<button disabled={currentFont==i} on:click={()=>{currentFont=i}} style:background={colors[i]}>{font}</button>
+	<div class="temp" style="margin-bottom: 20px; z-index: 1;">
+		{#each $mainStore.fonts as font, i}
+			<button disabled={$mainStore.activeFont==font} on:click={()=>{mainStore.setFont(i)}}>{font}</button>
+		{/each}
+		<br>
+		{#each $mainStore.colors as color, i}
+			<button disabled={$mainStore.activeColor==color} on:click={()=>{mainStore.setColor(i)}} style:background={$mainStore.colors[i]}>{color}</button>
 		{/each}
 	</div>
 	<Footer />
+	{#if $mainStore.settingsAreOpen}
+		<Settings />
+	{/if}
 </div>
 
 <style>
@@ -43,14 +47,13 @@
 
 	:global(body) {
 		height: 100vh;
+		background: #1E213F;
 	}
 
 	.page {
-		font-family: var(--font);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		height: 100%;
-		background: #1E213F;
 	}
 </style>

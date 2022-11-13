@@ -1,4 +1,12 @@
 <script>
+	import { mainStore } from "$scripts/store.js";
+
+	const timeCSS = [
+		"letter-spacing: -0.05em; padding-right: 0.05em",
+		"letter-spacing: normal;",
+		"letter-spacing: -10px; padding-right: 10px;",
+	]; //use fontIndex
+
 	let progress = 22;
 	let width;
 </script>
@@ -8,21 +16,22 @@
 		<div class="darker">
 			<svg>
 				{#key width} <!--recalculates radius on resizing-->
-					<circle style:--progress={progress} />
+					<circle style:--progress={progress || 0} style:--color={$mainStore.activeColor} />
 				{/key}
 			</svg>
 			<div class="text">
-				<span class="time">17:59</span>
+				<span class="time" style:--clockWeight={$mainStore.fontIndex == 2 ? 400 : 700} style={timeCSS[$mainStore.fontIndex]}>17:59</span>
 				<span>PAUSE</span>
 			</div>
 		</div>
 	</div>
-	
 </main>
-<label style="color: white;">
+
+<label style="color: white; z-index: 1;">
 	progress:
-	<input type="number" bind:value={progress} min=0 max=100>
+	<input type="number" bind:value={progress} min="0" max="100" />
 </label>
+
 <style>
 	main {
 		flex-grow: 1;
@@ -54,23 +63,23 @@
 
 	svg {
 		box-sizing: border-box;
-		transform: rotate(90deg) scaleX(-1);
+		transform: rotate(-90deg);
 		width: 100%;
 		height: 100%;
 	}
 	svg circle {
 		--strokeWidth: 3.3%;
-		--radius: calc(50% - var(--strokeWidth) / 2);
-		--circumference: calc(2 * 3.1415 * var(--radius));
+		--radius: 48.35%; /*calc(50% - var(--strokeWidth) / 2);*/
+		--circumference: 303.78305%; /*calc(2 * 3.1415 * var(--radius));*/
 		cx: 50%;
 		cy: 50%;
 		r: var(--radius);
 		fill: none;
-		stroke: var(--mainColor);
+		stroke: var(--color);
 		stroke-width: var(--strokeWidth);
 		stroke-linecap: round;
 		stroke-dasharray: var(--circumference);
-		stroke-dashoffset: calc(var(--circumference) * (100 - var(--progress) / 100));
+		stroke-dashoffset: calc(var(--circumference) * (var(--progress) / 100));
 		transition: stroke-dashoffset 0.3s;
 	}
 
@@ -92,8 +101,6 @@
 		--max-size: 100;
 		font-size: var(--clampedSize);
 		font-weight: var(--clockWeight);
-		letter-spacing: -0.05em; /*This is for Kumbh, Roboto should have none and Space -10px*/
-		padding-right: 0.05em; /*prevents letter-spacing from messing up centering*/
 	}
 
 	.time + span {
