@@ -4,10 +4,11 @@ const cleanState = {
 	modes: ["pomodoro", "short break", "long break"],
 	fonts: ["KumbhSans", "RobotoSlab", "SpaceMono"],
 	colors: ["#F87070", "#70F3F8", "#D881F8"],
-
+	
 	modeIndex: 0,
 	fontIndex: 0,
 	colorIndex: 0,
+	times: [25, 5, 15],
 
 	get activeMode() {
 		return this.modes[this.modeIndex];
@@ -17,9 +18,12 @@ const cleanState = {
 	},
 	get activeColor() {
 		return this.colors[this.colorIndex];
-    },
+	},
+	get activeTime() {
+		return this.times[this.modeIndex];
+	},
 
-    settings: false,
+    settingsAreOpen: false,
 };
 
 function createStore() {
@@ -27,28 +31,42 @@ function createStore() {
 	const tempStore = writable(cleanState);
 
 	//define custom store methods
-	tempStore.setThing = (thing, n) => {
-        tempStore.update((draft) => {
-            if (n < 0 || n > draft[thing + "s"].length) {
+	tempStore.setThingIndex = (thing, n) => {
+		tempStore.update((draft) => {
+			let i = draft[thing + "s"].indexOf(n);
+            if (i < 0) {
                 console.error("You tried to set a " + thing + " that doesn't exist");
-            } else {
-                draft[thing + "Index"] = n;
+			} else {
+				draft[thing + "Index"] = i;
             }
             return draft;
 		});
     };
     
     tempStore.setMode = (n) => {
-        tempStore.setThing("mode", n);
-    }
-
-    tempStore.setFont = (n) => {
-		tempStore.setThing("font", n);
+        tempStore.setThingIndex("mode", n);
+	}
+    
+	tempStore.setFont = (n) => {
+		tempStore.setThingIndex("font", n);
     };
 
     tempStore.setColor = (n) => {
-		tempStore.setThing("color", n);
-    };
+		tempStore.setThingIndex("color", n);
+	};
+
+	tempStore.setTimes = (n) => {
+		n.forEach((time, i) => {
+			if (time < 1 || time > 99) {
+				console.error("You entered a wrong time");
+			} else {
+				tempStore.update((draft) => {
+					draft.times[i] = time;
+					return draft;
+				});
+			}
+		})
+	}
 
     tempStore.toggleSettings = () => {
         tempStore.update((draft) => {
@@ -59,7 +77,7 @@ function createStore() {
 
 	//remove standard store methods with object destructuring and return store
 	//eslint-disable-next-line
-	const { set, update, setThing, ...returnStore } = tempStore; //subscribe, setMode, setFont, setColor
+	const { set, update, setThingIndex, ...returnStore } = tempStore; //subscribe, setMode, setFont, setColor, setTimes, toggleSettings
 	return returnStore;
 }
 

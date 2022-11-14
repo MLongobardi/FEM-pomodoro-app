@@ -6,15 +6,6 @@
 <div class="page" style:font-family={$mainStore.activeFont}>
 	<Header />
 	<Main />
-	<div class="temp" style="margin-bottom: 20px; z-index: 1;">
-		{#each $mainStore.fonts as font, i}
-			<button disabled={$mainStore.activeFont==font} on:click={()=>{mainStore.setFont(i)}}>{font}</button>
-		{/each}
-		<br>
-		{#each $mainStore.colors as color, i}
-			<button disabled={$mainStore.activeColor==color} on:click={()=>{mainStore.setColor(i)}} style:background={$mainStore.colors[i]}>{color}</button>
-		{/each}
-	</div>
 	<Footer />
 	{#if $mainStore.settingsAreOpen}
 		<Settings />

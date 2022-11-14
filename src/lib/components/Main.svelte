@@ -5,10 +5,12 @@
 		"letter-spacing: -0.05em; padding-right: 0.05em",
 		"letter-spacing: normal;",
 		"letter-spacing: -10px; padding-right: 10px;",
-	]; //use fontIndex
-
-	let progress = 22;
+	]; //use fontIndex as index
 	let width;
+	let progress = 22;
+	$: clockTime = $mainStore.activeTime * (100 - progress) / 100;
+	$: minutes = Math.floor(clockTime);
+	$: seconds = Math.floor((clockTime - minutes) * 60);
 </script>
 
 <main>
@@ -20,7 +22,7 @@
 				{/key}
 			</svg>
 			<div class="text">
-				<span class="time" style:--clockWeight={$mainStore.fontIndex == 2 ? 400 : 700} style={timeCSS[$mainStore.fontIndex]}>17:59</span>
+				<span class="time" style:--clockWeight={$mainStore.fontIndex == 2 ? 400 : 700} style={timeCSS[$mainStore.fontIndex]}>{minutes < 10 ? "0" : ""}{minutes}:{seconds < 10 ? "0" : ""}{seconds}</span>
 				<span>PAUSE</span>
 			</div>
 		</div>
@@ -29,7 +31,7 @@
 
 <label style="color: white; z-index: 1;">
 	progress:
-	<input type="number" bind:value={progress} min="0" max="100" />
+	<input type="number" bind:value={progress} min="0" max="100" step={100 / ($mainStore.activeTime * 60)}/>
 </label>
 
 <style>

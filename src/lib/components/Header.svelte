@@ -6,8 +6,8 @@
 	<h1>pomodoro</h1>
 	<div>
 		<span class="slider" style:--offset={$mainStore.modeIndex} style:--color={$mainStore.activeColor}/>
-		{#each $mainStore.modes as mode, i}
-			<button class:active={$mainStore.activeMode == mode} on:click={()=>{mainStore.setMode(i)}}>
+		{#each $mainStore.modes as mode}
+			<button class:active={$mainStore.activeMode == mode} on:click={()=>{mainStore.setMode(mode)}}>
 				{mode}
 			</button>
 		{/each}
