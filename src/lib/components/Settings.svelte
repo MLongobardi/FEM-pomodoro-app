@@ -32,5 +32,8 @@
 		background: white;
 		--padding: calc(var(--clampedSize) * 7.36 / 100); /*fixed at 7.36% of this size*/
 		border-radius: calc(var(--clampedSize) * 4.6 / 100); /*acts weirdly when using percentage*/
+		font-family: "KumbhSans";
+		color: #161932;
+		font-weight: 700;
 	}
 </style>

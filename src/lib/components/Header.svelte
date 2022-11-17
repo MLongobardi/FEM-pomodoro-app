@@ -61,6 +61,7 @@
 		padding: 18px 0;
 		font-weight: 700;
 		opacity: 0.4;
+		cursor: pointer;
 		transition: opacity 0.3s, color 0.4s;
 	}
 	button.active {

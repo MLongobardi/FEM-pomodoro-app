@@ -7,3 +7,4 @@ export { default as Footer } from "./Footer.svelte";
 export { default as Settings } from "./Settings.svelte";
 export { default as SettingsHeader } from "./SettingsHeader.svelte";
 export { default as SettingsBody } from "./SettingsBody.svelte";
+export { default as FancyRadio } from "./FancyRadio.svelte";

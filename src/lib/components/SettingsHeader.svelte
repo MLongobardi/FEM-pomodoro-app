@@ -21,7 +21,6 @@
 		--min-size: 20;
 		--max-size: 28;
 		font-size: var(--clampedSize);
-        color: #161932;
 		margin: 0;
 	}
 	.close {
@@ -31,6 +30,7 @@
         width: 25px;
         height: 25px;
         padding: 0;
+		cursor: pointer;
 	}
 	.close:before,
 	.close:after {

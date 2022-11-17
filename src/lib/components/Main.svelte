@@ -30,7 +30,7 @@
 </main>
 
 <label style="color: white; z-index: 1;">
-	progress:
+	progress (temp):
 	<input type="number" bind:value={progress} min="0" max="100" step={100 / ($mainStore.activeTime * 60)}/>
 </label>
 
