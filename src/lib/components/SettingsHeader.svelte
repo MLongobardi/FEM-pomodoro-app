@@ -8,13 +8,11 @@
 </div>
 
 <style>
-    /*variables are set in .settings-wrapper*/
-
     .settings-header {
 		display: flex;
 		justify-content: space-between;
         align-items: center;
-		padding: var(--padding);
+		padding: var(--padding); /*from parent*/
 		border-bottom: solid 1px #e3e1e1;
 	}
 	.settings-header h2 {

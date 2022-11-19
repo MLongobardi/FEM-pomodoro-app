@@ -8,3 +8,4 @@ export { default as Settings } from "./Settings.svelte";
 export { default as SettingsHeader } from "./SettingsHeader.svelte";
 export { default as SettingsBody } from "./SettingsBody.svelte";
 export { default as FancyRadio } from "./FancyRadio.svelte";
+export { default as FancyInputNumber } from "./FancyInputNumber.svelte";

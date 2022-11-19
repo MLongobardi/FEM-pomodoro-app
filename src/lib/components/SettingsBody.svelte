@@ -1,6 +1,6 @@
 <script>
 	import { mainStore } from "$scripts/store.js";
-	import { FancyRadio } from "$comps";
+	import { FancyInputNumber, FancyRadio } from "$comps";
 
 	let hack; //managed to do almost everything with pure css, but I had to use Svelte to change the text alignment of the last two h3 tags
 
@@ -45,15 +45,7 @@
 			<span /><!--occupies a grid cell-->
 			<span /><!--occupies a grid cell-->
 			{#each $mainStore.modes as mode, i}
-				<label
-					><span>{mode}</span><input
-						type="number"
-						name="times"
-						min="1"
-						max="99"
-						value={$mainStore.times[i]}
-					/>
-				</label>
+				<FancyInputNumber mode={mode} value={$mainStore.times[i]}/>
 			{/each}
 		</fieldset>
 
@@ -71,7 +63,7 @@
 
 		<fieldset class="color-section">
 			<legend>COLOR</legend>
-			<h3 bind:clientWidth={hack} style:text-align={hack > 168 ? "center" : "start"}>COLOR</h3>
+			<h3 style:text-align={hack > 168 ? "center" : "start"}>COLOR</h3>
 			<div class="radio-list">
 				{#each $mainStore.colors as color}
 					<FancyRadio name="color" value={color} checked={color == $mainStore.activeColor} />
@@ -85,7 +77,7 @@
 
 <style>
 	.settings-body {
-		padding: 0 var(--padding);
+		padding: 0 var(--padding); /*from parent*/
 		padding-bottom: 0;
 		text-align: center;
 	}
@@ -134,26 +126,6 @@
 		white-space: nowrap;
 		text-align: center;
 	}
-	.time-section label {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		align-items: center;
-	}
-	.time-section label span {
-		font-size: 12px;
-		opacity: 0.4;
-		margin-bottom: 8px;
-	}
-	input[type="number"] {
-		width: var(--min-item-width);
-		box-sizing: border-box;
-		background: #eff1fa;
-		border: none;
-		border-radius: 10px;
-		padding: 16px;
-		opacity: 1;
-	}
 
 	.font-section {
 		border-top: solid 1px #e3e1e1;
@@ -161,7 +133,6 @@
 	}
 	.font-section,
 	.color-section {
-		content: var(--clampedSize);
 		display: grid;
 		--width: 168px; /*width of radio-list*/
 		grid-template-columns: repeat(auto-fit, minmax(var(--width), 1fr));

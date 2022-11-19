@@ -69,7 +69,7 @@ function createStore() {
 	}
 
     tempStore.toggleSettings = () => {
-        tempStore.update((draft) => {
+		tempStore.update((draft) => {
             draft.settingsAreOpen = !draft.settingsAreOpen;
             return draft;
         })
