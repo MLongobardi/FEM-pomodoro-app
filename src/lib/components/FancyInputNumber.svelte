@@ -83,11 +83,6 @@
 		border-radius: 10px;
 		height: var(--inputHeight);
         padding: 0 16px;
-        /*
-		--min-size: 11;
-        --max-size: 19;
-		padding: 15px 16px var(--clampedSize) 16px;
-		*/
 		-webkit-appearance: textfield;
 		-moz-appearance: textfield;
 		appearance: textfield;

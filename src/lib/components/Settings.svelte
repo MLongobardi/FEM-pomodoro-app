@@ -8,7 +8,7 @@
 <div class="overlay" on:click|self={mainStore.toggleSettings}>
 	<div class="settings-wrapper">
 		<SettingsHeader />
-        <SettingsBody />
+		<SettingsBody />
 	</div>
 </div>
 

@@ -4,7 +4,7 @@ const cleanState = {
 	modes: ["pomodoro", "short break", "long break"],
 	fonts: ["KumbhSans", "RobotoSlab", "SpaceMono"],
 	colors: ["#F87070", "#70F3F8", "#D881F8"],
-	
+
 	modeIndex: 0,
 	fontIndex: 0,
 	colorIndex: 0,
@@ -23,7 +23,7 @@ const cleanState = {
 		return this.times[this.modeIndex];
 	},
 
-    settingsAreOpen: false,
+	settingsAreOpen: false,
 };
 
 function createStore() {
@@ -46,7 +46,7 @@ function createStore() {
     tempStore.setMode = (n) => {
         tempStore.setThingIndex("mode", n);
 	}
-    
+
 	tempStore.setFont = (n) => {
 		tempStore.setThingIndex("font", n);
     };
@@ -73,7 +73,7 @@ function createStore() {
             draft.settingsAreOpen = !draft.settingsAreOpen;
             return draft;
         })
-    }
+	}
 
 	//remove standard store methods with object destructuring and return store
 	//eslint-disable-next-line

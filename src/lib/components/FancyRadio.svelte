@@ -26,7 +26,7 @@
 		line-height: 40px;
 		text-align: center;
 		background-color: #eff1fa;
-		margin: 8px;
+		margin: 0 8px;
 		cursor: pointer;
 	}
 	label:not(:has(input:checked)):hover,

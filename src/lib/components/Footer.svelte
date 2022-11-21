@@ -1,8 +1,16 @@
 <script>
 	import { mainStore } from "$scripts/store.js";
+	import { Timer } from "$scripts/timer.js";
+	let t = new Timer(1/6, ()=>{t = t});
+	function toggle() {
+		if(t.running == false) t.start();
+		else t.pause();
+	}
 </script>
 
 <footer>
+	<span style="color: {t.end ? "red" : "white"}" on:click={()=>{if(!t.end) toggle()}}>{t.time}</span>
+	<span style="color: {t.end ? "green" : "grey"}" on:click={()=>{if(t.end) t.restart()}}>re</span>
 	<button on:click={mainStore.toggleSettings}> <!--a11y-->
 		<img alt="" src="/images/icon-settings.svg" />
 	</button>

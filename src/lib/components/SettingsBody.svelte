@@ -42,10 +42,9 @@
 		<fieldset class="time-section">
 			<legend>TIME (MINUTES)</legend>
 			<h3>TIME (MINUTES)</h3>
-			<span /><!--occupies a grid cell-->
-			<span /><!--occupies a grid cell-->
+			<span class="take-up-row" />
 			{#each $mainStore.modes as mode, i}
-				<FancyInputNumber mode={mode} value={$mainStore.times[i]}/>
+				<FancyInputNumber {mode} value={$mainStore.times[i]} />
 			{/each}
 		</fieldset>
 
@@ -115,7 +114,7 @@
 			100% / var(--cols) - var(--gap),
 			(var(--min-item-width) * var(--cols) - var(--gap) * 2 - 100%) * 999,
 			100%
-		); /*the middle argument is either a negative or a positive value that is multiplied by 999, forcing clamp to be either the first or the third argument*/
+		); /*the middle argument is either a negative or a positive value that is multiplied by 999, forcing clamp's result to be either the first or the last argument*/
 
 		display: grid;
 		column-gap: var(--gap);
@@ -125,6 +124,15 @@
 	.time-section h3 {
 		white-space: nowrap;
 		text-align: center;
+	}
+	.time-section .take-up-row {
+		grid-column: 1 / -1;
+		--min-size: 0;
+		--max-size: 10;
+		--min-screen: 657;
+		--max-screen: 658; /*screen size at which grid collapses*/
+		display: inline-block;
+		height: var(--clampedSize);
 	}
 
 	.font-section {
@@ -136,7 +144,8 @@
 		display: grid;
 		--width: 168px; /*width of radio-list*/
 		grid-template-columns: repeat(auto-fit, minmax(var(--width), 1fr));
-		gap: calc(100% - 2 * var(--width));
+		column-gap: calc(100% - 2 * var(--width));
+		row-gap: 18px;
 		align-items: center;
 	}
 

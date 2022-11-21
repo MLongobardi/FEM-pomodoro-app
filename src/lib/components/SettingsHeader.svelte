@@ -1,5 +1,5 @@
 <script>
-    import { mainStore } from "$scripts/store.js";
+	import { mainStore } from "$scripts/store.js";
 </script>
 
 <div class="settings-header">
@@ -8,11 +8,13 @@
 </div>
 
 <style>
-    .settings-header {
+	.settings-header {
+		--min-size: 24;
+		--max-size: 29.5;
 		display: flex;
 		justify-content: space-between;
-        align-items: center;
-		padding: var(--padding); /*from parent*/
+		align-items: center;
+		padding: var(--clampedSize) var(--padding); /*from parent*/
 		border-bottom: solid 1px #e3e1e1;
 	}
 	.settings-header h2 {
@@ -23,26 +25,27 @@
 	}
 	.close {
 		position: relative;
-        background: transparent;
-        border: none;
-        width: 25px;
-        height: 25px;
-        padding: 0;
+		background: transparent;
+		border: none;
+		width: 23px;
+		height: 23px;
+		padding: 0;
 		cursor: pointer;
 	}
 	.close:before,
 	.close:after {
 		position: absolute;
 		left: 47%;
-        top: 18%;
+		top: 18%;
 		content: " ";
 		height: 16px;
 		width: 2px;
 		background-color: #979797;
 	}
-    .close:hover:before, .close:hover:after {
-        background-color: #161932;
-    }
+	.close:hover:before,
+	.close:hover:after {
+		background-color: #161932;
+	}
 	.close:before {
 		transform: rotate(45deg);
 	}
