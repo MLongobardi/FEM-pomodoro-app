@@ -4,9 +4,11 @@
 	let thisInput,
 		interval,
 		isActive = false,
-		upOrDown = "";
-
-	function start() {
+		upOrDown = "",
+		startClickTarget = "";
+	
+	function start(e) {
+		if (e) startClickTarget = e.target;
 		step();
 		document.addEventListener("mouseup", end);
 		isActive = true;
@@ -14,8 +16,9 @@
 			interval = setInterval(step, 50);
 		}, 200);
 	}
-	function end() {
-		upOrDown = "";
+	function end(e) {
+		if(e && e.target != startClickTarget) upOrDown = "";
+		startClickTarget = "";
 		isActive = false;
 		clearInterval(interval);
 		document.removeEventListener("mouseup", end);

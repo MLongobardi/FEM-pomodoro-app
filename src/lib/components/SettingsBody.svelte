@@ -34,6 +34,8 @@
 		if ($mainStore.activeColor !== data.color) {
 			mainStore.setColor(data.color);
 		}
+
+		mainStore.setMode($mainStore.activeMode);
 	}
 </script>
 

@@ -6,42 +6,51 @@
 		"letter-spacing: normal;",
 		"letter-spacing: -10px; padding-right: 10px;",
 	]; //use fontIndex as index
+
 	let width;
-	let progress = 22;
-	$: clockTime = $mainStore.activeTime * (100 - progress) / 100;
-	$: minutes = Math.floor(clockTime);
-	$: seconds = Math.floor((clockTime - minutes) * 60);
+
+	function addZero(n) {
+		if (n < 10) {
+			return "0" + n;
+		}
+		return n;
+	}
 </script>
 
 <main>
-	<div class="true" bind:clientWidth={width}>
-		<div class="darker">
+	<div class="clock" bind:clientWidth={width} style:--mainColor={$mainStore.activeColor}>
+		<div class="darker-background">
 			<svg>
 				{#key width} <!--recalculates radius on resizing-->
-					<circle style:--progress={progress || 0} style:--color={$mainStore.activeColor} />
+					<circle style:--progress={$mainStore.timer.progress || 0} />
 				{/key}
 			</svg>
-			<div class="text">
-				<span class="time" style:--clockWeight={$mainStore.fontIndex == 2 ? 400 : 700} style={timeCSS[$mainStore.fontIndex]}>{minutes < 10 ? "0" : ""}{minutes}:{seconds < 10 ? "0" : ""}{seconds}</span>
-				<span>PAUSE</span>
+			<div class="inner">
+				<span class="time" style:--clockWeight={$mainStore.fontIndex == 2 ? 400 : 700} style={timeCSS[$mainStore.fontIndex]}>
+					{addZero($mainStore.timer.minutes)}:{addZero($mainStore.timer.seconds)}
+				</span>
+				
+				{#if $mainStore.timer.end}
+					<button on:click={()=>{mainStore.setMode($mainStore.activeMode)}}>RESTART</button>
+				{:else if $mainStore.timer.running}
+					<button on:click={mainStore.pauseTimer}>PAUSE</button>
+				{:else}
+					<button on:click={mainStore.startTimer}>START</button>
+				{/if}
 			</div>
 		</div>
 	</div>
 </main>
 
-<label style="color: white; z-index: 1;">
-	progress (temp):
-	<input type="number" bind:value={progress} min="0" max="100" step={100 / ($mainStore.activeTime * 60)}/>
-</label>
-
 <style>
 	main {
-		flex-grow: 1;
+		flex-grow: 100;
+		max-height: 663px;
 		display: flex;
 		align-items: center;
 	}
 
-	.true {
+	.clock {
 		--min-size: 300;
 		--max-size: 410;
 		border-radius: 50%;
@@ -53,7 +62,7 @@
 		box-shadow: -50px -50px 100px #272c5a, 50px 50px 100px #121530;
 	}
 
-	.darker {
+	.darker-background {
 		background: #161932;
 		border-radius: 100%;
 		width: 100%;
@@ -77,7 +86,7 @@
 		cy: 50%;
 		r: var(--radius);
 		fill: none;
-		stroke: var(--color);
+		stroke: var(--mainColor);
 		stroke-width: var(--strokeWidth);
 		stroke-linecap: round;
 		stroke-dasharray: var(--circumference);
@@ -85,7 +94,7 @@
 		transition: stroke-dashoffset 0.3s;
 	}
 
-	.text {
+	.inner {
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -105,12 +114,19 @@
 		font-weight: var(--clockWeight);
 	}
 
-	.time + span {
+	.inner button {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
 		letter-spacing: 0.9375em;
 		padding-left: 0.9375em;
 		--min-size: 14;
 		--max-size: 16;
 		font-size: var(--clampedSize);
-		text-align: center;
+		color: #d7e0ff;
+	}
+	.inner button:hover, .inner button:active {
+		color: var(--mainColor);
 	}
 </style>

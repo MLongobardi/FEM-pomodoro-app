@@ -23,13 +23,17 @@
 		font-family: "KumbhSans";
 		color: #d7e0ff;
 		text-align: center;
-		margin: 40px 0;
+		/*margin-top: 40px;*/
+		margin-top: 0;
+		--min-size: 45;
+		--max-size: 55;
+		margin-bottom: var(--clampedSize);
 	}
 	
 	div {
 		--min-size: 313;
 		--max-size: 360;
-		--padding: 8px;
+		--padding: 7.5px;
 		border-radius: 31.5px;
 		background: #161932;
 		padding: var(--padding);
@@ -58,7 +62,7 @@
 		background: transparent;
 		color: #D7E0FF;
 		border: none;
-		padding: 18px 0;
+		padding: 15px 0;
 		font-weight: 700;
 		opacity: 0.4;
 		cursor: pointer;

@@ -4,6 +4,7 @@
 </script>
 
 <div class="page" style:font-family={$mainStore.activeFont}>
+	<span class="spacer" />
 	<Header />
 	<Main />
 	<Footer />
@@ -35,9 +36,13 @@
 		src: url("/fonts/SpaceMono-Bold.ttf") format("truetype");
 		font-weight: bold;
 	}
-
+	
+	:root {
+		min-height: 100vh;
+		height: 100%;
+	}
 	:global(body) {
-		height: 100vh;
+		height: 100%;
 		background: #1E213F;
 	}
 
@@ -45,6 +50,13 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 		height: 100%;
+	}
+	
+	.spacer {
+		flex-basis: 32px;
+		max-height: 80px;
+		flex-grow: 10;
 	}
 </style>

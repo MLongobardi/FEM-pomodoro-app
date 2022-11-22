@@ -1,30 +1,7 @@
 import { writable } from "svelte/store";
-
-const cleanState = {
-	modes: ["pomodoro", "short break", "long break"],
-	fonts: ["KumbhSans", "RobotoSlab", "SpaceMono"],
-	colors: ["#F87070", "#70F3F8", "#D881F8"],
-
-	modeIndex: 0,
-	fontIndex: 0,
-	colorIndex: 0,
-	times: [25, 5, 15],
-
-	get activeMode() {
-		return this.modes[this.modeIndex];
-	},
-	get activeFont() {
-		return this.fonts[this.fontIndex];
-	},
-	get activeColor() {
-		return this.colors[this.colorIndex];
-	},
-	get activeTime() {
-		return this.times[this.modeIndex];
-	},
-
-	settingsAreOpen: false,
-};
+import { Timer } from "$scripts/timer.js";
+import { cleanState } from "$scripts/cleanState.js"
+const TICK_RATE = 50;
 
 function createStore() {
 	//initialize store
@@ -34,24 +11,29 @@ function createStore() {
 	tempStore.setThingIndex = (thing, n) => {
 		tempStore.update((draft) => {
 			let i = draft[thing + "s"].indexOf(n);
-            if (i < 0) {
-                console.error("You tried to set a " + thing + " that doesn't exist");
+			if (i < 0) {
+				console.error("You tried to set a " + thing + " that doesn't exist");
 			} else {
 				draft[thing + "Index"] = i;
-            }
-            return draft;
+			}
+			return draft;
 		});
-    };
-    
-    tempStore.setMode = (n) => {
-        tempStore.setThingIndex("mode", n);
-	}
+	};
+
+	tempStore.setMode = (n) => {
+		tempStore.setThingIndex("mode", n);
+		tempStore.pauseTimer();
+		tempStore.update((draft) => {
+			draft.timer = new Timer(draft.activeTime);
+			return draft;
+		});
+	};
 
 	tempStore.setFont = (n) => {
 		tempStore.setThingIndex("font", n);
-    };
+	};
 
-    tempStore.setColor = (n) => {
+	tempStore.setColor = (n) => {
 		tempStore.setThingIndex("color", n);
 	};
 
@@ -65,19 +47,53 @@ function createStore() {
 					return draft;
 				});
 			}
-		})
-	}
+		});
+	};
 
-    tempStore.toggleSettings = () => {
+	tempStore.toggleSettings = () => {
 		tempStore.update((draft) => {
-            draft.settingsAreOpen = !draft.settingsAreOpen;
-            return draft;
-        })
-	}
+			draft.settingsAreOpen = !draft.settingsAreOpen;
+			return draft;
+		});
+	};
+
+	tempStore.startTimer = () => {
+		tempStore.update((draft) => {
+			if (draft.timer.running) return draft;
+			draft.timer.running = true;
+			draft.timer.interval = setInterval(() => {
+				draft.timer.deltaTime += TICK_RATE;
+				if (draft.timer.deltaTime >= 1000) {
+					tempStore.update((secondDraft) => {
+						secondDraft.timer.currentTime--;
+						secondDraft.timer.deltaTime = 0;
+						if (secondDraft.timer.currentTime <= 0) {
+							secondDraft.timer.currentTime = 0;
+							secondDraft.timer.end = true;
+							tempStore.pauseTimer();
+						}
+						return secondDraft;
+					});
+				}
+			}, TICK_RATE);
+			return draft;
+		});
+	};
+
+	tempStore.pauseTimer = () => {
+		tempStore.update((draft) => {
+			if (!draft.timer.running) return draft;
+			draft.timer.running = false;
+			clearInterval(draft.timer.interval);
+			return draft;
+		});
+	};
+
+
 
 	//remove standard store methods with object destructuring and return store
 	//eslint-disable-next-line
-	const { set, update, setThingIndex, ...returnStore } = tempStore; //subscribe, setMode, setFont, setColor, setTimes, toggleSettings
+	const { set, update, setThingIndex, ...returnStore } = tempStore; //subscribe, setMode, setFont, setColor, setTimes, toggleSettings, startTimer, pauseTimer
 	return returnStore;
 }
 
