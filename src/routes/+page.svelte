@@ -59,4 +59,8 @@
 		max-height: 80px;
 		flex-grow: 10;
 	}
+
+	:global(button) {
+		-webkit-tap-highlight-color: transparent;
+	}
 </style>

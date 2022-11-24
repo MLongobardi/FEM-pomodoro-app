@@ -1,11 +1,11 @@
 <script>
 	import { mainStore } from "$scripts/store.js";
 
-	const timeCSS = [
-		"letter-spacing: -0.05em; padding-right: 0.05em",
-		"letter-spacing: normal;",
-		"letter-spacing: -10px; padding-right: 10px;",
-	]; //use fontIndex as index
+	$: timeCSS = [
+		"letter-spacing: -0.05em; padding-right: 0.05em; font-weight: 700;",
+		"letter-spacing: normal; font-weight: 700;",
+		"letter-spacing: -10px; padding-right: 10px; font-weight: 400;",
+	][$mainStore.fontIndex]; //css changes with font
 
 	let width;
 
@@ -15,6 +15,16 @@
 		}
 		return n;
 	}
+
+	function handleClick() {
+		if ($mainStore.timer.end) {
+			mainStore.setMode($mainStore.activeMode);
+		} else if ($mainStore.timer.running) {
+			mainStore.pauseTimer();
+		} else {
+			mainStore.startTimer();
+		}
+	}
 </script>
 
 <main>
@@ -22,22 +32,24 @@
 		<div class="darker-background">
 			<svg>
 				{#key width} <!--recalculates radius on resizing-->
-					<circle style:--progress={$mainStore.timer.progress || 0} />
+					<circle r=0 style:--progress={$mainStore.timer.progress || 0} />
 				{/key}
 			</svg>
-			<div class="inner">
-				<span class="time" style:--clockWeight={$mainStore.fontIndex == 2 ? 400 : 700} style={timeCSS[$mainStore.fontIndex]}>
+			<button class="inner" on:click={handleClick}>
+				<span class="time" style={timeCSS}>
 					{addZero($mainStore.timer.minutes)}:{addZero($mainStore.timer.seconds)}
 				</span>
+				<span class="text">
+					{#if $mainStore.timer.end}
+						RESTART
+					{:else if $mainStore.timer.running}
+						PAUSE
+					{:else}
+						START
+					{/if}
+				</span>
 				
-				{#if $mainStore.timer.end}
-					<button on:click={()=>{mainStore.setMode($mainStore.activeMode)}}>RESTART</button>
-				{:else if $mainStore.timer.running}
-					<button on:click={mainStore.pauseTimer}>PAUSE</button>
-				{:else}
-					<button on:click={mainStore.startTimer}>START</button>
-				{/if}
-			</div>
+			</button>
 		</div>
 	</div>
 </main>
@@ -61,10 +73,17 @@
 		background: linear-gradient(315deg, #2e325a 0%, #0e112a 100%);
 		box-shadow: -50px -50px 100px #272c5a, 50px 50px 100px #121530;
 	}
+	.clock:has(button.inner:active) {
+		background: linear-gradient(135deg, #2e325a 0%, #0e112a 100%);
+		box-shadow: none;
+		/*If you want to invert it instead:
+		box-shadow: 50px 50px 100px #272c5a, -50px -50px 100px #121530;
+		*/
+	}
 
 	.darker-background {
 		background: #161932;
-		border-radius: 100%;
+		border-radius: 50%;
 		width: 100%;
 		height: 100%;
 		box-sizing: border-box;
@@ -94,27 +113,36 @@
 		transition: stroke-dashoffset 0.3s;
 	}
 
-	.inner {
+	button.inner {
+		/*reset*/
+		border: none;
+		background: none;
+		outline: none;
+		padding: 0;
+		cursor: pointer;
+		/*end reset*/
 		position: absolute;
+		border-radius: 50%;
 		top: 50%;
 		left: 50%;
-		width: 0;
-		height: 0;
+		width: 100%;
+		height: 100%;
+		transform: translate(-50%, -50%);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		color: #d7e0ff;
+		user-select: none;
 	}
 
 	.time {
 		--min-size: 80;
 		--max-size: 100;
 		font-size: var(--clampedSize);
-		font-weight: var(--clockWeight);
 	}
 
-	.inner button {
+	.text {
 		background: none;
 		border: none;
 		padding: 0;
@@ -126,7 +154,13 @@
 		font-size: var(--clampedSize);
 		color: #d7e0ff;
 	}
-	.inner button:hover, .inner button:active {
+	button.inner:active .text {
 		color: var(--mainColor);
+	}
+
+	@media (hover: hover) {
+		button.inner:hover .text{
+			color: var(--mainColor);
+		}
 	}
 </style>

@@ -62,6 +62,7 @@
 		background: transparent;
 		color: #D7E0FF;
 		border: none;
+		outline: none;
 		padding: 15px 0;
 		font-weight: 700;
 		opacity: 0.4;

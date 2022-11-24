@@ -28,6 +28,7 @@
 		background-color: #eff1fa;
 		margin: 0 8px;
 		cursor: pointer;
+		-webkit-tap-highlight-color: transparent;
 	}
 	label:not(:has(input:checked)):hover,
 	label:not(:has(input:checked)):active {

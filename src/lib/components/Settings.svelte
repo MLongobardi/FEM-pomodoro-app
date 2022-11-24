@@ -24,6 +24,9 @@
 		height: 100%;
 		z-index: 2;
 	}
+	:global(body):has(.overlay) {
+		overflow-y: hidden;
+	}
 
 	.settings-wrapper {
 		--min-size: 328;
