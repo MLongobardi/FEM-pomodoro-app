@@ -12,15 +12,10 @@
 		<img alt="" src="/images/icon-settings-light.svg" />
 	</button>
 	<span class="spacer" />
+	<!--prettier-ignore-->
 	<p class="attribution">
-		Challenge by <a
-			href="https://www.frontendmentor.io/challenges/pomodoro-app-KBFnycJ6G"
-			target="_blank"
-			rel="noreferrer">Frontend Mentor</a
-		>. Coded by
-		<a href="https://github.com/MLongobardi/FEM-pomodoro-app" target="_blank" rel="noreferrer"
-			>Mlongobardi</a
-		>.
+		Challenge by <a	href="https://www.frontendmentor.io/challenges/pomodoro-app-KBFnycJ6G" target="_blank" rel="noreferrer">Frontend Mentor</a>.
+		Coded by <a href="https://github.com/MLongobardi/FEM-pomodoro-app" target="_blank" rel="noreferrer">Mlongobardi</a>.
 	</p>
 </footer>
 
@@ -30,7 +25,7 @@
 		max-height: 131px;
 		display: flex;
 		flex-direction: column;
-		text-align: center;
+		align-items: center;
 	}
 
 	button {
