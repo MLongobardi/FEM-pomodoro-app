@@ -11,7 +11,7 @@
 	>
 		<img alt="" src="/images/icon-settings-light.svg" />
 	</button>
-	<span class="spacer"/>
+	<span class="spacer" />
 	<p class="attribution">
 		Challenge by <a
 			href="https://www.frontendmentor.io/challenges/pomodoro-app-KBFnycJ6G"

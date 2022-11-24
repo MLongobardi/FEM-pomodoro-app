@@ -69,6 +69,7 @@
 		width: var(--clampedSize);
 		height: var(--clampedSize);
 		box-sizing: border-box;
+		margin: 15px 0;
 		padding: 5.36667%;
 		background: linear-gradient(315deg, #2e325a 0%, #0e112a 100%);
 		box-shadow: -50px -50px 100px #272c5a, 50px 50px 100px #121530;

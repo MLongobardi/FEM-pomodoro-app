@@ -7,10 +7,10 @@
 * {
 	--min-screen: 375; /*Change me*/
 	--max-screen: 768; /*Change me*/
-
+	
 	--size-at-min: var(--min-size, 35);
 	--size-at-max: var(--max-size, 50);
-
+	
 	--slope: calc((var(--size-at-max) - var(--size-at-min)) / (var(--max-screen) - var(--min-screen)));
 	--yIntersection: calc(var(--size-at-min) - var(--min-screen) * var(--slope));
 	

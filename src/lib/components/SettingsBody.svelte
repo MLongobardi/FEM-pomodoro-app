@@ -111,13 +111,13 @@
 	.time-section {
 		--cols: 3;
 		--min-item-width: 140px;
-		--gap: max(5px, (100% - 3 * var(--min-item-width)) / (var(--cols) - 1));
+		--gap: max(5px, (100% - var(--cols) * var(--min-item-width)) / (var(--cols) - 1));
 		--magic-number: clamp(
 			100% / var(--cols) - var(--gap),
 			(var(--min-item-width) * var(--cols) - var(--gap) * 2 - 100%) * 999,
 			100%
 		); /*the middle argument is either a negative or a positive value that is multiplied by 999, forcing clamp's result to be either the first or the last argument*/
-
+		
 		display: grid;
 		column-gap: var(--gap);
 		row-gap: 8px;
