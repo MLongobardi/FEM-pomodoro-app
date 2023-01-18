@@ -48,11 +48,7 @@
 		justify-content: center;
 		height: 100%;
 		min-height: 100vh;
-	}
-	@supports(min-height: 100dvh) {
-		.page {
-			min-height: 100dvh;
-		}
+		min-height: 100svh; /*Only when supported*/
 	}
 
 	.spacer {
