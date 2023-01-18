@@ -6,22 +6,24 @@
 		isActive = false,
 		upOrDown = "",
 		startClickTarget = "";
-
+	
 	function start(e) {
 		if (e) startClickTarget = e.target;
 		step();
-		document.addEventListener("mouseup", end);
+		document.addEventListener("pointerup", end);
+		document.addEventListener("touchend", end);
 		isActive = true;
 		interval = setTimeout(() => {
 			interval = setInterval(step, 50);
 		}, 200);
 	}
 	function end(e) {
-		if (e && e.target != startClickTarget) upOrDown = "";
+		if (e && (e.type == "touchend" || e.target != startClickTarget)) upOrDown = "";
 		startClickTarget = "";
 		isActive = false;
 		clearInterval(interval);
-		document.removeEventListener("mouseup", end);
+		document.removeEventListener("pointerup", end);
+        document.removeEventListener("touchend", end);
 	}
 	function step() {
 		if (upOrDown == "up") thisInput.stepUp();
@@ -31,7 +33,7 @@
 			end();
 		}
 	}
-
+	
 	onDestroy(end);
 </script>
 
@@ -40,13 +42,13 @@
 		<span class="text">{mode}</span>
 		<input bind:this={thisInput} type="number" name="times" min="1" max="99" {value} />
 		
-		<span class="arrows" on:mousedown={start} on:mouseleave={()=>{if (!isActive) upOrDown=""}}>
+		<span class="arrows" on:pointerdown={start} on:pointerleave={()=>{if (!isActive) upOrDown=""}}>
 			{#each ["up", "down"] as x}
 				{@const dark = upOrDown == x ? "-dark" : ""}
 				<button
 					type="button"
 					style:background-image={"url(/images/icon-arrow-" + x + dark + ".svg)"}
-					on:mouseenter={() => {upOrDown = x}}
+					on:pointerenter={() => {upOrDown = x}}
 				/>
 			{/each}
 		</span>

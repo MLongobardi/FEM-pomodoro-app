@@ -40,7 +40,7 @@
 	:global(body) {
 		background: #1e213f;
 	}
-
+	
 	.page {
 		display: flex;
 		flex-direction: column;
@@ -48,6 +48,11 @@
 		justify-content: center;
 		height: 100%;
 		min-height: 100vh;
+	}
+	@supports(min-height: 100dvh) {
+		.page {
+			min-height: 100dvh;
+		}
 	}
 
 	.spacer {

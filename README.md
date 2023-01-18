@@ -85,20 +85,20 @@ By setting the --min-size and --max-size css custom properties in the object you
 This is another cool CSS trick (from SettingsBody.svelte):
 ```css
 .time-section {
-		--cols: 3;
-		--min-item-width: 140px;
-		--gap: max(5px, (100% - var(--cols) * var(--min-item-width)) / (var(--cols) - 1));
-		--magic-number: clamp(
-			100% / var(--cols) - var(--gap),
-			(var(--min-item-width) * var(--cols) - var(--gap) * 2 - 100%) * 999,
-			100%
-		); /*the middle argument is either a negative or a positive value that is multiplied by 999, forcing clamp's result to be either the first or the last argument*/
-		
-		display: grid;
-		column-gap: var(--gap);
-		row-gap: 8px;
-		grid-template-columns: repeat(auto-fit, minmax(var(--magic-number), 1fr));
-	}
+	--cols: 3;
+	--min-item-width: 140px;
+	--gap: max(5px, (100% - var(--cols) * var(--min-item-width)) / (var(--cols) - 1));
+	--magic-number: clamp(
+		100% / var(--cols) - var(--gap),
+		(var(--min-item-width) * var(--cols) - var(--gap) * 2 - 100%) * 999,
+		100%
+	); /*the middle argument is either a negative or a positive value that is multiplied by 999, forcing clamp's result to be either the first or the last argument*/
+
+	display: grid;
+	column-gap: var(--gap);
+	row-gap: 8px;
+	grid-template-columns: repeat(auto-fit, minmax(var(--magic-number), 1fr));
+}
 ```
 This creates a grid that has a number of columns equal to --cols where each column's width is --min-item-width. However, if there isn't enough space to fit all the columns, the grid collapses into a single column allowing for a mobile version.
 The --gap formula sets a column gap that fills all the remaining space, simulating flexbox's justify-content: space-between (but with a minimum of a 5px gap).

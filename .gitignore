@@ -14,6 +14,7 @@
 .DS_Store
 .prettierignore
 node_modules
+/.vscode
 /build
 /.svelte-kit
 /package

@@ -31,6 +31,7 @@
 		height: 23px;
 		padding: 0;
 		cursor: pointer;
+		transform: scale(2);
 	}
 	.close:before,
 	.close:after {
@@ -47,9 +48,9 @@
 		background-color: #161932;
 	}
 	.close:before {
-		transform: rotate(45deg);
+		transform: scale(0.5) rotate(45deg);
 	}
 	.close:after {
-		transform: rotate(-45deg);
+		transform: scale(0.5) rotate(-45deg);
 	}
 </style>
