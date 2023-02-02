@@ -13,7 +13,7 @@
 	</button>
 	<span class="spacer" />
 	<!--prettier-ignore-->
-	<p class="attribution">
+	<p class="attribution" style:--color={$mainStore.activeColor}>
 		Challenge by <a	href="https://www.frontendmentor.io/challenges/pomodoro-app-KBFnycJ6G" target="_blank" rel="noreferrer">Frontend Mentor</a>.
 		Coded by <a href="https://github.com/MLongobardi/FEM-pomodoro-app" target="_blank" rel="noreferrer">Mlongobardi</a>.
 	</p>
@@ -57,6 +57,6 @@
 		font-size: 0.7em;
 	}
 	.attribution a {
-		color: hsl(228, 45%, 44%);
+		color: var(--color)
 	}
 </style>
