@@ -6,7 +6,7 @@
 		isActive = false,
 		upOrDown = "",
 		startClickTarget = "";
-	
+
 	function start(e) {
 		if (e) startClickTarget = e.target;
 		step();
@@ -33,7 +33,7 @@
 			end();
 		}
 	}
-	
+
 	onDestroy(end);
 </script>
 
@@ -41,7 +41,6 @@
 	<label>
 		<span class="text">{mode}</span>
 		<input bind:this={thisInput} type="number" name="times" min="1" max="99" {value} />
-		
 		<span class="arrows" on:pointerdown={start} on:pointerleave={()=>{if (!isActive) upOrDown=""}}>
 			{#each ["up", "down"] as x}
 				{@const dark = upOrDown == x ? "-dark" : ""}
