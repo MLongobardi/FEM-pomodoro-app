@@ -9,7 +9,7 @@
 			mainStore.pauseTimer();
 		}}
 	>
-		<img alt="" src="/images/icon-settings-light.svg" />
+		<img alt="open settings" src="/images/icon-settings-light.svg" />
 	</button>
 	<span class="spacer" />
 	<!--prettier-ignore-->
